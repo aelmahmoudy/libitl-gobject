@@ -1,63 +1,95 @@
 #include "itl-gobject.h"
 
-gint itl_h_date(GDate *cdate, gint day, gint month, gint year) {
+/**
+ * itl_h_date:
+ *
+ * @day: (in): Gregorian day
+ * @month: (in): Gregorian month
+ * @year: (in): Gregorian year
+ * 
+ * Convert Gregorian date to Hijra date
+ *
+ * Return value: (transfer full): Hijri date
+ */
+GDate *itl_h_date(gint day, gint month, gint year) {
   sDate ITLDate;
+  GDate *cdate;
   int ret;
 
   ret = h_date(&ITLDate, (int) day, (int) month, (int) year);
 
-  cdate->julian = 0;
-  cdate->dmy = 1;
-  cdate->day = ITLDate.day;
-  cdate->month = ITLDate.month;
-  cdate->year = ITLDate.year;
+  cdate = g_date_new_dmy(ITLDate.day, ITLDate.month, ITLDate.year);
 
-  return(ret);
+  return(cdate);
 }
 
-gint itl_g_date(GDate *cdate, gint day, gint month, gint year) {
+/**
+ * itl_h_date:
+ *
+ * @day: (in): Hijri day
+ * @month: (in): Hijri month
+ * @year: (in): Hijri year
+ * 
+ * Convert Hijri date to Gregorian date
+ *
+ * Return value: (transfer full): Gregorian date
+ */
+GDate *itl_g_date(gint day, gint month, gint year) {
   sDate ITLDate;
+  GDate *cdate;
   int ret;
 
   ret = g_date(&ITLDate, (int) day, (int) month, (int) year);
 
-  cdate->julian = 0;
-  cdate->dmy = 1;
-  cdate->day = ITLDate.day;
-  cdate->month = ITLDate.month;
-  cdate->year = ITLDate.year;
+  cdate = g_date_new_dmy(ITLDate.day, ITLDate.month, ITLDate.year);
 
-  return(ret);
+  return(cdate);
 }
 
-gint itl_G2H(GDate *cdate, gint yg, gint mg, gint dg) {
+/**
+ * itl_h_date:
+ *
+ * @dg: (in): Gregorian day
+ * @mg: (in): Gregorian month
+ * @yg: (in): Gregorian year
+ * 
+ * Convert Gregorian date to Hijra date using Umm Ul-Qura algorithm
+ *
+ * Return value: (transfer full): Hijri date
+ */
+GDate *itl_G2H(gint yg, gint mg, gint dg) {
   sDate ITLDate;
+  GDate *cdate;
   int ret;
 
   ret = G2H(&ITLDate, (int) yg, (int) mg, (int) dg);
 
-  cdate->julian = 0;
-  cdate->dmy = 1;
-  cdate->day = ITLDate.day;
-  cdate->month = ITLDate.month;
-  cdate->year = ITLDate.year;
+  cdate = g_date_new_dmy(ITLDate.day, ITLDate.month, ITLDate.year);
 
-  return(ret);
+  return(cdate);
 }
 
-gint itl_H2G(GDate *cdate, gint yh, gint mh, gint dh) {
+/**
+ * itl_h_date:
+ *
+ * @dh: (in): Hijri day
+ * @mh: (in): Hijri month
+ * @yh: (in): Hijri year
+ * 
+ * Convert Hijri date to Gregorian date using Umm Ul-Qura algorithm
+ *
+ * Return value: (transfer full): Gregorian date
+ */
+GDate *itl_H2G(gint yh, gint mh, gint dh) {
   sDate ITLDate;
+  GDate *cdate;
   int ret;
 
   ret = H2G(&ITLDate, (int) yh, (int) mh, (int) dh);
 
-  cdate->julian = 0;
-  cdate->dmy = 1;
-  cdate->day = ITLDate.day;
-  cdate->month = ITLDate.month;
-  cdate->year = ITLDate.year;
+  cdate = g_date_new_dmy(ITLDate.day, ITLDate.month, ITLDate.year);
 
-  return(ret);
+  return(cdate);
 }
 
 gint itl_HijriGreg (GDate *HijriDate, GDate *GregDate, gboolean Hijri, gboolean UmmAlQura) {

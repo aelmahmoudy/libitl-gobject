@@ -6,11 +6,11 @@
 #include <glib.h>
 #include <glib-object.h>
 
-gint itl_h_date(GDate *cdate, gint day, gint month, gint year);
-gint itl_g_date(GDate *cdate, gint day, gint month, gint year);
+GDate *itl_h_date(gint day, gint month, gint year);
+GDate *itl_g_date(gint day, gint month, gint year);
 
-gint itl_G2H(GDate *cdate, gint yg, gint mg, gint dg);
-gint itl_H2G(GDate *cdate, gint yh, gint mh, gint dh);
+GDate *itl_G2H(gint yg, gint mg, gint dg);
+GDate *itl_H2G(gint yh, gint mh, gint dh);
 
 gint itl_HijriGreg (GDate *HijriDate, GDate *GregDate, gboolean Hijri, gboolean UmmAlQura);
 
