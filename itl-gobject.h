@@ -58,8 +58,8 @@ GType itl_prayer_get_type (void) G_GNUC_CONST;
 GObject *itl_prayer_new              (void);
 
 void itl_prayer_setMethod(ItlPrayer *prayer, gint n);
-void itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cday);
-GDateTime *itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cday);
+GList *itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate);
+GDateTime *itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cdate);
 gdouble itl_prayer_getNorthQibla(ItlPrayer *prayer);
 void itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
                              degreeLat, gdouble gmtDiff, gboolean dst);

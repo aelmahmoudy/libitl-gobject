@@ -142,7 +142,6 @@ struct _ItlPrayerPrivate
 {
   Method method;
   Location loc;
-  Prayer prayer[6];
 };
 
 static void
@@ -182,15 +181,15 @@ itl_prayer_new (void)
  * itl_prayer_setMethod:
  *
  * @prayer: (in): an #ItlPrayer
- * @n: (in): auto fill method:
- *    0: none. Set to default or 0
- *    1: Egyptian General Authority of Survey
- *    2: University of Islamic Sciences, Karachi (Shaf'i)
- *    3: University of Islamic Sciences, Karachi (Hanafi)
- *    4: Islamic Society of North America
- *    5: Muslim World League (MWL)
- *    6: Umm Al-Qurra, Saudi Arabia
- *    7: Fixed Ishaa Interval (always 90)
+ * @n: (in): auto fill method: \
+ *    0: none. Set to default or 0 \
+ *    1: Egyptian General Authority of Survey \
+ *    2: University of Islamic Sciences, Karachi (Shaf'i) \
+ *    3: University of Islamic Sciences, Karachi (Hanafi) \
+ *    4: Islamic Society of North America \
+ *    5: Muslim World League (MWL) \
+ *    6: Umm Al-Qurra, Saudi Arabia \
+ *    7: Fixed Ishaa Interval (always 90) \
  *    8: Egyptian General Authority of Survey (Egypt)
  *
  * This function is used to auto fill the Method structure with predefined
@@ -212,14 +211,19 @@ itl_prayer_setMethod (ItlPrayer *prayer, gint n)
  * itl_prayer_getPrayerTimes:
  *
  * @prayer: (in): an #ItlPrayer
- * @cDate: (in): Date for which to calculate prayer times
+ * @cdate: (in): Date for which to calculate prayer times
  *
  * This function calculates prayer times for the given date
+ *
+ * Return value: (transfer full) (element-type GLib.DateTime): 6 prayer times from Fajr till Isha'
  */
-void
+GList *
 itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
 {
   Date ITLDate;
+  GDateTime *fajr, *shurooq, *dhuhr, *asr, *maghrib, *isha;
+  GList *Prayers=NULL;
+  Prayer ITLPrayer[6];
 
   g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
 
@@ -230,17 +234,43 @@ itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
   ITLDate.year = g_date_get_year(cdate);
 
   getPrayerTimes (&prayer->priv->loc, &prayer->priv->method, &ITLDate,
-                  &prayer->priv->prayer);
+                  ITLPrayer);
 
+  fajr = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                               ITLPrayer[0].hour, ITLPrayer[0].minute,
+                               ITLPrayer[0].second);
+  shurooq = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                                  ITLPrayer[1].hour, ITLPrayer[1].minute,
+                                  ITLPrayer[1].second);
+  dhuhr = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                                ITLPrayer[2].hour, ITLPrayer[2].minute,
+                                ITLPrayer[2].second);
+  asr = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                              ITLPrayer[3].hour, ITLPrayer[3].minute,
+                              ITLPrayer[3].second);
+  maghrib = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                                  ITLPrayer[4].hour, ITLPrayer[4].minute,
+                                  ITLPrayer[4].second);
+  isha = g_date_time_new_local(ITLDate.year, ITLDate.month, ITLDate.day,
+                               ITLPrayer[5].hour, ITLPrayer[5].minute,
+                               ITLPrayer[5].second);
+
+  Prayers = g_list_append(Prayers, fajr);
+  Prayers = g_list_append(Prayers, shurooq);
+  Prayers = g_list_append(Prayers, dhuhr);
+  Prayers = g_list_append(Prayers, asr);
+  Prayers = g_list_append(Prayers, maghrib);
+  Prayers = g_list_append(Prayers, isha);
 
   g_object_unref (prayer);
+  return(Prayers);
 }
 
 /**
  * itl_prayer_getNextDayFajr:
  *
  * @prayer: (in): an #ItlPrayer
- * @cDate: (in): Date for which to calculate Fajr for the day after
+ * @cdate: (in): Date for which to calculate Fajr for the day after
  *
  * This function calculates prayer times for the given date
  *
