@@ -54,7 +54,7 @@ struct _ItlPrayerClass
   GObjectClass parent_class;
 };
 
-//GType itl_prayer_get_type (void) G_GNUC_CONST;
+GType itl_prayer_get_type (void) G_GNUC_CONST;
 GObject *itl_prayer_new              (void);
 
 void itl_prayer_setMethod(ItlPrayer *prayer, gint n);

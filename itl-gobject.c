@@ -110,22 +110,22 @@ GDate *itl_HijriGreg (GDate *DateIn, gboolean Hijri, gboolean UmmAlQura) {
 
   if(Hijri) {
     if(UmmAlQura) {
-      ret = H2G(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
-                get_year(DateIn));
+      ret = H2G(&ITLDate, (int) g_date_get_day(DateIn), (int) g_date_get_month(DateIn), (int)
+                g_date_get_year(DateIn));
     }
     else {
-      ret = h_date(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
-                   get_year(DateIn));
+      ret = h_date(&ITLDate, (int) g_date_get_day(DateIn), (int) g_date_get_month(DateIn), (int)
+                   g_date_get_year(DateIn));
     }
   }
   else {
     if(UmmAlQura) {
-      ret = G2H(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
-                get_year(DateIn));
+      ret = G2H(&ITLDate, (int) g_date_get_day(DateIn), (int) g_date_get_month(DateIn), (int)
+                g_date_get_year(DateIn));
     }
     else {
-      ret = g_date(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
-                   get_year(DateIn));
+      ret = g_date(&ITLDate, (int) g_date_get_day(DateIn), (int) g_date_get_month(DateIn), (int)
+                   g_date_get_year(DateIn));
     }
   }
 
@@ -165,6 +165,13 @@ itl_prayer_init (ItlPrayer *self)
   priv->loc.temperature = 10;
 }
 
+/**
+ * itl_prayer_new:
+ *
+ * Creates a new #ItlPrayer
+ *
+ * Return value: a new #ItlPrayer
+ */
 GObject*
 itl_prayer_new (void)
 {
@@ -218,9 +225,9 @@ itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
 
   g_object_ref (prayer);
 
-  ITLDate.day = get_day(cdate);
-  ITLDate.month = get_month(cdate);
-  ITLDate.year = get_year(cdate);
+  ITLDate.day = g_date_get_day(cdate);
+  ITLDate.month = g_date_get_month(cdate);
+  ITLDate.year = g_date_get_year(cdate);
 
   getPrayerTimes (&prayer->priv->loc, &prayer->priv->method, &ITLDate,
                   &prayer->priv->prayer);
@@ -250,9 +257,9 @@ itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cdate)
 
   g_object_ref (prayer);
 
-  ITLDate.day = get_day(cdate);
-  ITLDate.month = get_month(cdate);
-  ITLDate.year = get_year(cdate);
+  ITLDate.day = g_date_get_day(cdate);
+  ITLDate.month = g_date_get_month(cdate);
+  ITLDate.year = g_date_get_year(cdate);
 
   getNextDayFajr (&prayer->priv->loc, &prayer->priv->method, &ITLDate,
                   &cPrayer);
