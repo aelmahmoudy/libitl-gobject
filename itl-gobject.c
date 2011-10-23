@@ -24,7 +24,7 @@ GDate *itl_h_date(gint day, gint month, gint year) {
 }
 
 /**
- * itl_h_date:
+ * itl_g_date:
  *
  * @day: (in): Hijri day
  * @month: (in): Hijri month
@@ -47,7 +47,7 @@ GDate *itl_g_date(gint day, gint month, gint year) {
 }
 
 /**
- * itl_h_date:
+ * itl_G2H:
  *
  * @dg: (in): Gregorian day
  * @mg: (in): Gregorian month
@@ -70,7 +70,7 @@ GDate *itl_G2H(gint yg, gint mg, gint dg) {
 }
 
 /**
- * itl_h_date:
+ * itl_H2G:
  *
  * @dh: (in): Hijri day
  * @mh: (in): Hijri month
@@ -92,44 +92,46 @@ GDate *itl_H2G(gint yh, gint mh, gint dh) {
   return(cdate);
 }
 
-gint itl_HijriGreg (GDate *HijriDate, GDate *GregDate, gboolean Hijri, gboolean UmmAlQura) {
+/**
+ * itl_HijriGreg:
+ *
+ * @DateIn: (in): Date struct to convert
+ * @Hijri: (in): DateIn date type; TRUE=Hijri, FALSE=Gregorian
+ * @UmmAlQura: (in): TRUE=Use Umm Al-Qura algorithm, FALSE=otherwise
+ *
+ * Convert Hijri date to Gregorian date using Umm Ul-Qura algorithm
+ *
+ * Return value: (transfer full): Converted Date struct
+ */
+GDate *itl_HijriGreg (GDate *DateIn, gboolean Hijri, gboolean UmmAlQura) {
   sDate ITLDate;
+  GDate *cdate;
   int ret;
 
   if(Hijri) {
     if(UmmAlQura) {
-      ret = H2G(&ITLDate, (int) GregDate->day, (int) GregDate->month, (int)
-                GregDate->year);
+      ret = H2G(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
+                get_year(DateIn));
     }
     else {
-      ret = h_date(&ITLDate, (int) GregDate->day, (int) GregDate->month, (int)
-                   GregDate->year);
+      ret = h_date(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
+                   get_year(DateIn));
     }
-
-    HijriDate->julian = 0;
-    HijriDate->dmy = 1;
-    HijriDate->day = ITLDate.day;
-    HijriDate->month = ITLDate.month;
-    HijriDate->year = ITLDate.year;
   }
   else {
     if(UmmAlQura) {
-      ret = G2H(&ITLDate, (int) HijriDate->day, (int) HijriDate->month, (int)
-                HijriDate->year);
+      ret = G2H(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
+                get_year(DateIn));
     }
     else {
-      ret = g_date(&ITLDate, (int) HijriDate->day, (int) HijriDate->month, (int)
-                   HijriDate->year);
+      ret = g_date(&ITLDate, (int) get_day(DateIn), (int) get_month(DateIn), (int)
+                   get_year(DateIn));
     }
-
-    GregDate->julian = 0;
-    GregDate->dmy = 1;
-    GregDate->day = ITLDate.day;
-    GregDate->month = ITLDate.month;
-    GregDate->year = ITLDate.year;
   }
 
-  return((gint) ret);
+  cdate = g_date_new_dmy(ITLDate.day, ITLDate.month, ITLDate.year);
+
+  return(cdate);
 }
 
 G_DEFINE_TYPE (ItlPrayer, itl_prayer, G_TYPE_OBJECT);
@@ -157,6 +159,10 @@ itl_prayer_init (ItlPrayer *self)
   ItlPrayerPrivate *priv;
 
   self->priv = priv = ITL_PRAYER_GET_PRIVATE (self);
+  // Set some default values:
+  priv->loc.seaLevel    = 0;
+  priv->loc.pressure    = 1010;
+  priv->loc.temperature = 10;
 }
 
 GObject*
@@ -165,8 +171,26 @@ itl_prayer_new (void)
   return g_object_new (ITL_TYPE_PRAYER, NULL);
 }
 
+/**
+ * itl_prayer_setMethod:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @n: (in): auto fill method:
+ *    0: none. Set to default or 0
+ *    1: Egyptian General Authority of Survey
+ *    2: University of Islamic Sciences, Karachi (Shaf'i)
+ *    3: University of Islamic Sciences, Karachi (Hanafi)
+ *    4: Islamic Society of North America
+ *    5: Muslim World League (MWL)
+ *    6: Umm Al-Qurra, Saudi Arabia
+ *    7: Fixed Ishaa Interval (always 90)
+ *    8: Egyptian General Authority of Survey (Egypt)
+ *
+ * This function is used to auto fill the Method structure with predefined
+ * data.
+ */
 void
-itl_prayer_getMethod (ItlPrayer *prayer, gint n)
+itl_prayer_setMethod (ItlPrayer *prayer, gint n)
 {
   g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
 
@@ -177,6 +201,14 @@ itl_prayer_getMethod (ItlPrayer *prayer, gint n)
   g_object_unref (prayer);
 }
 
+/**
+ * itl_prayer_getPrayerTimes:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @cDate: (in): Date for which to calculate prayer times
+ *
+ * This function calculates prayer times for the given date
+ */
 void
 itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
 {
@@ -186,35 +218,63 @@ itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
 
   g_object_ref (prayer);
 
-  ITLDate.day = cdate->day;
-  ITLDate.month = cdate->month;
-  ITLDate.year = cdate->year;
+  ITLDate.day = get_day(cdate);
+  ITLDate.month = get_month(cdate);
+  ITLDate.year = get_year(cdate);
 
   getPrayerTimes (&prayer->priv->loc, &prayer->priv->method, &ITLDate,
                   &prayer->priv->prayer);
 
+
   g_object_unref (prayer);
 }
 
-void
+/**
+ * itl_prayer_getNextDayFajr:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @cDate: (in): Date for which to calculate Fajr for the day after
+ *
+ * This function calculates prayer times for the given date
+ *
+ * Return value: (transfer full): DateTime struct for next day fajr time
+ */
+GDateTime *
 itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cdate)
 {
   Date ITLDate;
+  Prayer cPrayer;
+  GDateTime *NextDayFajr;
 
   g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
 
   g_object_ref (prayer);
 
-  ITLDate.day = cdate->day;
-  ITLDate.month = cdate->month;
-  ITLDate.year = cdate->year;
+  ITLDate.day = get_day(cdate);
+  ITLDate.month = get_month(cdate);
+  ITLDate.year = get_year(cdate);
 
   getNextDayFajr (&prayer->priv->loc, &prayer->priv->method, &ITLDate,
-                  &prayer->priv->prayer);
+                  &cPrayer);
+
+  NextDayFajr = g_date_time_new_local(ITLDate.year, ITLDate.month,
+                                       ITLDate.day, cPrayer.hour,
+                                       cPrayer.minute, cPrayer.second);
 
   g_object_unref (prayer);
+
+  return(NextDayFajr);
 }
 
+/**
+ * itl_prayer_getNorthQibla:
+ *
+ * @prayer: (in): an #ItlPrayer
+ *
+ * Get Qibla direction
+ *
+ * Return value: (transfer full): Qibla direction
+ */
 gdouble
 itl_prayer_getNorthQibla (ItlPrayer *prayer)
 {
@@ -231,10 +291,20 @@ itl_prayer_getNorthQibla (ItlPrayer *prayer)
   return(NorthQibla);
 }
 
+/**
+ * itl_prayer_setLocation:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @degreeLong: (in): Longitude in decimal degree.
+ * @degreeLat: (in): Latitude in decimal degree.
+ * @gmtDiff: (in): GMT difference at regular time.
+ * @dst: (in): Daylight savings time switch; (0 if not used).
+ *
+ * Set location for which to calculate prayer times
+ */
 void
 itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
-                        degreeLat, gdouble gmtDiff, gboolean dst, gdouble
-                        seaLevel, gdouble pressure, gdouble temperature)
+                        degreeLat, gdouble gmtDiff, gboolean dst)
 {
   g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
 
@@ -244,9 +314,66 @@ itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
   prayer->priv->loc.degreeLat   = (double) degreeLat;
   prayer->priv->loc.gmtDiff     = (double) gmtDiff;
   prayer->priv->loc.dst         = (int) dst;
+
+  g_object_unref (prayer);
+}
+
+/**
+ * itl_prayer_set_seaLevel:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @seaLevel: (in): Height above Sea level in meters
+ *
+ * Set sea level of location for which to calculate prayer times
+ */
+void
+itl_prayer_set_seaLevel(ItlPrayer *prayer, gdouble seaLevel)
+{
+  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+
+  g_object_ref (prayer);
+
   prayer->priv->loc.seaLevel    = (double) seaLevel;
+
+  g_object_unref (prayer);
+}
+
+/**
+ * itl_prayer_set_pressure:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @pressure: (in): Atmospheric pressure in millibars
+ *
+ * Set pressure of location for which to calculate prayer times
+ */
+void
+itl_prayer_set_pressure(ItlPrayer *prayer, gdouble pressure)
+{
+  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+
+  g_object_ref (prayer);
+
   prayer->priv->loc.pressure    = (double) pressure;
-  prayer->priv->loc.temperature = (double) temperature;
+
+  g_object_unref (prayer);
+}
+
+/**
+ * itl_prayer_set_temperature:
+ *
+ * @prayer: (in): an #ItlPrayer
+ * @temperature: (in): Temperature in Celsius degree
+ *
+ * Set temperature of location for which to calculate prayer times
+ */
+void
+itl_prayer_set_temperature(ItlPrayer *prayer, gdouble temperature)
+{
+  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+
+  g_object_ref (prayer);
+
+  prayer->priv->loc.temperature    = (double) temperature;
 
   g_object_unref (prayer);
 }

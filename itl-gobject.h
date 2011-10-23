@@ -12,19 +12,19 @@ GDate *itl_g_date(gint day, gint month, gint year);
 GDate *itl_G2H(gint yg, gint mg, gint dg);
 GDate *itl_H2G(gint yh, gint mh, gint dh);
 
-gint itl_HijriGreg (GDate *HijriDate, GDate *GregDate, gboolean Hijri, gboolean UmmAlQura);
+GDate *itl_HijriGreg (GDate *DateIn, gboolean Hijri, gboolean UmmAlQura);
 
 G_BEGIN_DECLS
 
-#define ITL_TYPE_PRAYER tut_triangle_get_type()
+#define ITL_TYPE_PRAYER itl_prayer_get_type()
 
 #define ITL_PRAYER(obj) \
   (G_TYPE_CHECK_INSTANCE_CAST ((obj), \
-  ITL_TYPE_PRAYER, TutTriangle))
+  ITL_TYPE_PRAYER, ItlPrayer))
 
 #define ITL_PRAYER_CLASS(klass) \
   (G_TYPE_CHECK_CLASS_CAST ((klass), \
-  ITL_TYPE_PRAYER, TutTriangleClass))
+  ITL_TYPE_PRAYER, ItlPrayerClass))
 
 #define GOBJECT_IS_PRAYER(obj) \
   (G_TYPE_CHECK_INSTANCE_TYPE ((obj), \
@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 
 #define ITL_PRAYER_GET_CLASS(obj) \
   (G_TYPE_INSTANCE_GET_CLASS ((obj), \
-  ITL_TYPE_PRAYER, TutTriangleClass))
+  ITL_TYPE_PRAYER, ItlPrayerClass))
 
 typedef struct _ItlPrayer ItlPrayer;
 typedef struct _ItlPrayerClass ItlPrayerClass;
@@ -57,10 +57,15 @@ struct _ItlPrayerClass
 //GType itl_prayer_get_type (void) G_GNUC_CONST;
 GObject *itl_prayer_new              (void);
 
-void itl_prayer_getMethod(ItlPrayer *prayer, gint n);
+void itl_prayer_setMethod(ItlPrayer *prayer, gint n);
 void itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cday);
-void itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cday);
+GDateTime *itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cday);
 gdouble itl_prayer_getNorthQibla(ItlPrayer *prayer);
+void itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
+                             degreeLat, gdouble gmtDiff, gboolean dst);
+void itl_prayer_set_seaLevel(ItlPrayer *prayer, gdouble seaLevel);
+void itl_prayer_set_pressure(ItlPrayer *prayer, gdouble pressure);
+void itl_prayer_set_temperature(ItlPrayer *prayer, gdouble temperature);
 
 G_END_DECLS
 
