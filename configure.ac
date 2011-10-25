@@ -12,7 +12,6 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-litl':
 AC_CHECK_LIB([itl], [getNorthQibla])
 
 PKG_CHECK_MODULES(GOBJECT, gobject-2.0 >= 2.2.0)
