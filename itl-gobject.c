@@ -151,6 +151,40 @@ GDate *itl_HijriGreg (GDate *DateIn, gboolean Hijri, gboolean UmmAlQura) {
 }
 
 G_DEFINE_TYPE (ItlPrayer, itl_prayer, G_TYPE_OBJECT);
+
+enum
+{
+  PROP_0,
+
+  /* Location properties */
+  PROP_DEGREE_LONG,
+  PROP_DEGREE_LAT,
+  PROP_GMT_DIFF,
+  PROP_DST,
+  PROP_SEA_LEVEL,
+  PROP_PRESSURE,
+  PROP_TEMPERATURE,
+  /* Method properties */
+  PROP_FAJR_ANG,
+  PROP_ISHAA_ANG,
+  PROP_IMSAAK_ANG,
+  PROP_FAJR_INV,
+  PROP_ISHAA_INV,
+  PROP_IMSAAK_INV,
+  PROP_ROUND,
+  PROP_MATHHAB,
+  PROP_NEAREST_LAT,
+  PROP_EXTREME,
+  PROP_OFFSET
+//  offList[6],
+};
+
+/* Defaults (copied from libitl's C library */
+#define KAABA_LAT 21.423333
+#define KAABA_LONG 39.823333
+#define DEF_NEAREST_LATITUDE 48.5
+#define DEF_IMSAAK_ANGLE 1.5
+
 #define ITL_PRAYER_GET_PRIVATE(obj) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((obj), ITL_TYPE_PRAYER, ItlPrayerPrivate))
 
@@ -161,9 +195,342 @@ struct _ItlPrayerPrivate
 };
 
 static void
+itl_prayer_set_property (GObject      *object,
+                         guint         prop_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  ItlPrayer *prayer= ITL_PRAYER(object);
+
+  switch (prop_id)
+    {
+    /* Location properties */
+    case PROP_DEGREE_LONG:
+      prayer->priv->loc.degreeLong = (double) g_value_get_double (value);
+      break;
+    case PROP_DEGREE_LAT:
+      prayer->priv->loc.degreeLat = (double) g_value_get_double (value);
+      break;
+    case PROP_GMT_DIFF:
+      prayer->priv->loc.gmtDiff = (double) g_value_get_double (value);
+      break;
+    case PROP_DST:
+      prayer->priv->loc.dst = (int) g_value_get_boolean (value);
+      break;
+    case PROP_SEA_LEVEL:
+      prayer->priv->loc.seaLevel = (double) g_value_get_double (value);
+      break;
+    case PROP_PRESSURE:
+      prayer->priv->loc.pressure = (double) g_value_get_double (value);
+      break;
+    case PROP_TEMPERATURE:
+      prayer->priv->loc.temperature = (double) g_value_get_double (value);
+      break;
+    /* Method properties */
+    case PROP_FAJR_ANG:
+      prayer->priv->method.fajrAng = (double) g_value_get_double (value);
+      break;
+    case PROP_ISHAA_ANG:
+      prayer->priv->method.ishaaAng = (double) g_value_get_double (value);
+      break;
+    case PROP_IMSAAK_ANG:
+      prayer->priv->method.imsaakAng = (double) g_value_get_double (value);
+      break;
+    case PROP_FAJR_INV:
+      prayer->priv->method.fajrInv = (int) g_value_get_int (value);
+      break;
+    case PROP_ISHAA_INV:
+      prayer->priv->method.ishaaInv = (int) g_value_get_int (value);
+      break;
+    case PROP_IMSAAK_INV:
+      prayer->priv->method.imsaakInv = (int) g_value_get_int (value);
+      break;
+    case PROP_ROUND:
+      prayer->priv->method.round = (int) g_value_get_int (value);
+      break;
+    case PROP_MATHHAB:
+      prayer->priv->method.mathhab = (int) g_value_get_int (value);
+      break;
+    case PROP_NEAREST_LAT:
+      prayer->priv->method.nearestLat = (double) g_value_get_double (value);
+      break;
+    case PROP_EXTREME:
+      prayer->priv->method.extreme = (int) g_value_get_int (value);
+      break;
+    case PROP_OFFSET:
+      prayer->priv->method.offset = (int) g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+  }
+}
+
+static void
+itl_prayer_get_property (GObject      *object,
+                         guint         prop_id,
+                         GValue *value,
+                         GParamSpec   *pspec)
+{
+  ItlPrayer *prayer= ITL_PRAYER(object);
+
+  switch (prop_id)
+    {
+    /* Location properties */
+    case PROP_DEGREE_LONG:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.degreeLong);
+      break;
+    case PROP_DEGREE_LAT:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.degreeLat);
+      break;
+    case PROP_GMT_DIFF:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.gmtDiff);
+      break;
+    case PROP_DST:
+      g_value_set_boolean (value, (gboolean) prayer->priv->loc.dst);
+      break;
+    case PROP_SEA_LEVEL:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.seaLevel);
+      break;
+    case PROP_PRESSURE:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.pressure);
+      break;
+    case PROP_TEMPERATURE:
+      g_value_set_double (value, (gdouble) prayer->priv->loc.temperature);
+      break;
+    /* Method properties */
+    case PROP_FAJR_ANG:
+      g_value_set_double (value, (gdouble) prayer->priv->method.fajrAng);
+      break;
+    case PROP_ISHAA_ANG:
+      g_value_set_double (value, (gdouble) prayer->priv->method.ishaaAng);
+      break;
+    case PROP_IMSAAK_ANG:
+      g_value_set_double (value, (gdouble) prayer->priv->method.imsaakAng);
+      break;
+    case PROP_FAJR_INV:
+      g_value_set_int (value, (gint) prayer->priv->method.fajrInv);
+      break;
+    case PROP_ISHAA_INV:
+      g_value_set_int (value, (gint) prayer->priv->method.ishaaInv);
+      break;
+    case PROP_IMSAAK_INV:
+      g_value_set_int (value, (gint) prayer->priv->method.imsaakInv);
+      break;
+    case PROP_ROUND:
+      g_value_set_int (value, (gint) prayer->priv->method.round);
+      break;
+    case PROP_MATHHAB:
+      g_value_set_int (value, (gint) prayer->priv->method.mathhab);
+      break;
+    case PROP_NEAREST_LAT:
+      g_value_set_double (value, (gdouble) prayer->priv->method.nearestLat);
+      break;
+    case PROP_EXTREME:
+      g_value_set_int (value, (gint) prayer->priv->method.extreme);
+      break;
+    case PROP_OFFSET:
+      g_value_set_boolean (value, (gboolean) prayer->priv->method.offset);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+  }
+}
+
+static void
+itl_prayer_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (itl_prayer_parent_class)->finalize (object);
+}
+
+static void
+itl_prayer_dispose (GObject *object)
+{
+  G_OBJECT_CLASS (itl_prayer_parent_class)->dispose (object);
+}
+
+static void
 itl_prayer_class_init (ItlPrayerClass *klass)
 {
   GObjectClass        *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->finalize     = itl_prayer_finalize;
+  gobject_class->dispose      = itl_prayer_dispose;
+  gobject_class->set_property = itl_prayer_set_property;
+  gobject_class->get_property = itl_prayer_get_property;
+
+  /* Location properties */
+  g_object_class_install_property (gobject_class,
+                                   PROP_DEGREE_LONG,
+                                   g_param_spec_double ("degreeLong",
+                                                        "Longitude", "Longitude in decimal degree",
+                                                        -180.0, 180.0, KAABA_LONG,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_DEGREE_LAT,
+                                   g_param_spec_double ("degreeLat",
+                                                        "Latitude", " Latitude in decimal degree",
+                                                        -90.0, 90.0, KAABA_LAT,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_GMT_DIFF,
+                                   g_param_spec_double ("gmtDiff",
+                                                        "GMT difference",
+                                                        " GMT difference at regular time.",
+                                                        -12.0, +14.0, 3.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_DST,
+                                   g_param_spec_boolean ("dst",
+                                                         "Daylight savings time",
+                                                         "Daylight savings time switch (0 if not used)",
+                                                         FALSE,
+                                                         G_PARAM_READABLE |
+                                                         G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_SEA_LEVEL,
+                                   g_param_spec_double ("seaLevel",
+                                                        "Sea level",
+                                                        "Height above Sea level in meters",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_PRESSURE,
+                                   g_param_spec_double ("pressure", "Pressure",
+                                                        " Atmospheric pressure in millibars (the astronomical standard value is 1010)",
+                                                        G_MINDOUBLE,
+                                                        G_MAXDOUBLE, 1010.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class,
+                                   PROP_TEMPERATURE,
+                                   g_param_spec_double ("temperature",
+                                                        "Temperature",
+                                                        "Temperature in Celsius degree (the astronomical standard value is 10)",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 10.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+
+  /* Method properties */
+  g_object_class_install_property (gobject_class, PROP_FAJR_ANG,
+                                   g_param_spec_double ("fajrAng",
+                                                        "Fajr angle",
+                                                        "Fajr angle",
+                                                        0.0,
+                                                        20.0, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_ISHAA_ANG,
+                                   g_param_spec_double ("ishaaAng",
+                                                        "Ishaa' angle",
+                                                        "Ishaa' angle",
+                                                        0.0,
+                                                        20.0, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_FAJR_INV,
+                                   g_param_spec_int ("fajrInv",
+                                                     "Fajr interval",
+                                                     "Amount of minutes between Fajr and Shurooq (0 if not used)",
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READABLE |
+                                                     G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_ISHAA_INV,
+                                   g_param_spec_int ("ishaaInv",
+                                                     "Ishaa' interval",
+                                                     "Amount of minutes between Ishaa and Maghrib (0 if not used)",
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READABLE |
+                                                     G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_IMSAAK_INV,
+                                   g_param_spec_int ("imsaakInv",
+                                                     "Imsaak Interval",
+                                                     "Amount of minutes between Imsaak and Fajr",
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READABLE |
+                                                     G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_IMSAAK_ANG,
+                                   g_param_spec_double ("imsaakAng",
+                                                        "Imsaak angle",
+                                                        " The angle difference between Imsaak and Fajr",
+                                                        0, G_MAXINT, 0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_ROUND,
+                                   g_param_spec_int("round", "Rounding",
+                                                    "Method used for rounding seconds",
+                                                    0, 3, 0, G_PARAM_READABLE |
+                                                    G_PARAM_WRITABLE));
+/*                         0: No Rounding. "Prayer.seconds" is set to the
+                            amount of computed seconds.
+                         1: Normal Rounding. If seconds are equal to
+                            30 or above, add 1 minute. Sets
+                            "Prayer.seconds" to zero.
+                         2: Special Rounding. Similar to normal rounding
+                            but we always round down for Shurooq and
+                            Imsaak times. (default)
+                         3: Aggressive Rounding. Similar to Special
+                            Rounding but we add 1 minute if the seconds
+                            value is equal to 1 second or more.  */
+  g_object_class_install_property (gobject_class, PROP_MATHHAB,
+                                   g_param_spec_int ("mathhab", "Math'hab",
+                                                     "Asr prayer shadow ratio",
+                                                     1, 2, 1, G_PARAM_READABLE
+                                                     | G_PARAM_WRITABLE));
+/*                         1: Shaf'i (default)
+                         2: Hanafi */
+  g_object_class_install_property (gobject_class, PROP_NEAREST_LAT,
+                                   g_param_spec_double ("nearestLat",
+                                                        "Nearest latitude",
+                                                        "Latitude Used for the 'Nearest Latitude' extreme methods.",
+                                                        -90.0, 90.0,
+                                                        DEF_NEAREST_LATITUDE,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_EXTREME,
+                                   g_param_spec_int ("extreme", "Extreme",
+                                                     "Extreme latitude calculation method",
+                                                     0, 13, 5, G_PARAM_READABLE
+                                                     | G_PARAM_WRITABLE));
+    /* 
+       Supported methods for Extreme Latitude calculations (Method.extreme) -
+       (see the file "./doc/method-info.txt" for details) :
+      
+       0:  none. if unable to calculate, leave as 99:99
+       1:  Nearest Latitude: All prayers Always
+       2:  Nearest Latitude: Fajr Ishaa Always
+       3:  Nearest Latitude: Fajr Ishaa if invalid
+       4:  Nearest Good Day: All prayers Always
+       5:  Nearest Good Day: Fajr Ishaa if invalid (default)
+       6:  1/7th of Night: Fajr Ishaa Always
+       7:  1/7th of Night: Fajr Ishaa if invalid
+       8:  1/7th of Day: Fajr Ishaa Always
+       9:  1/7th of Day: Fajr Ishaa if invalid
+       10: Half of the Night: Fajr Ishaa Always
+       11: Half of the Night: Fajr Ishaa if invalid
+       12: Minutes from Shorooq/Maghrib: Fajr Ishaa Always (e.g. Maghrib=Ishaa)
+       13: Minutes from Shorooq/Maghrib: Fajr Ishaa If invalid
+    
+    */
+  g_object_class_install_property (gobject_class, PROP_OFFSET,
+                                   g_param_spec_boolean ("offset",
+                                                     "Enable Offsets",
+                                                     "This option allows you to add or subtract any amount of minutes to the daily computed prayer times based on values (in minutes) for each prayer in the offList array",
+                                                     FALSE, G_PARAM_READABLE |
+                                                     G_PARAM_WRITABLE));
+/*  double offList[6];  /* For Example: If you want to add 30 seconds to
+                         Maghrib and subtract 2 minutes from Ishaa:
+                              offset = 1
+                              offList[4] = 0.5
+                              offList[5] = -2
+                         ..and than call getPrayerTimes as usual. */
 
   g_type_class_add_private (gobject_class, sizeof (ItlPrayerPrivate));
 }
@@ -175,9 +542,10 @@ itl_prayer_init (ItlPrayer *self)
 
   self->priv = priv = ITL_PRAYER_GET_PRIVATE (self);
   // Set some default values:
-  priv->loc.seaLevel    = 0;
-  priv->loc.pressure    = 1010;
-  priv->loc.temperature = 10;
+  priv->loc.seaLevel    = 0.0;
+  priv->loc.pressure    = 1010.0;
+  priv->loc.temperature = 10.0;
+  getMethod(0, &priv->method);
 }
 
 /**
@@ -187,7 +555,7 @@ itl_prayer_init (ItlPrayer *self)
  *
  * Return value: a new #ItlPrayer
  */
-GObject*
+ItlPrayer*
 itl_prayer_new (void)
 {
   return g_object_new (ITL_TYPE_PRAYER, NULL);
@@ -367,66 +735,6 @@ itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
   prayer->priv->loc.degreeLat   = (double) degreeLat;
   prayer->priv->loc.gmtDiff     = (double) gmtDiff;
   prayer->priv->loc.dst         = (int) dst;
-
-  g_object_unref (prayer);
-}
-
-/**
- * itl_prayer_set_seaLevel:
- *
- * @prayer: (in): an #ItlPrayer
- * @seaLevel: (in): Height above Sea level in meters
- *
- * Set sea level of location for which to calculate prayer times
- */
-void
-itl_prayer_set_seaLevel(ItlPrayer *prayer, gdouble seaLevel)
-{
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
-
-  g_object_ref (prayer);
-
-  prayer->priv->loc.seaLevel    = (double) seaLevel;
-
-  g_object_unref (prayer);
-}
-
-/**
- * itl_prayer_set_pressure:
- *
- * @prayer: (in): an #ItlPrayer
- * @pressure: (in): Atmospheric pressure in millibars
- *
- * Set pressure of location for which to calculate prayer times
- */
-void
-itl_prayer_set_pressure(ItlPrayer *prayer, gdouble pressure)
-{
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
-
-  g_object_ref (prayer);
-
-  prayer->priv->loc.pressure    = (double) pressure;
-
-  g_object_unref (prayer);
-}
-
-/**
- * itl_prayer_set_temperature:
- *
- * @prayer: (in): an #ItlPrayer
- * @temperature: (in): Temperature in Celsius degree
- *
- * Set temperature of location for which to calculate prayer times
- */
-void
-itl_prayer_set_temperature(ItlPrayer *prayer, gdouble temperature)
-{
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
-
-  g_object_ref (prayer);
-
-  prayer->priv->loc.temperature    = (double) temperature;
 
   g_object_unref (prayer);
 }

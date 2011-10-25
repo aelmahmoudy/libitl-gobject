@@ -70,7 +70,7 @@ struct _ItlPrayerClass
 };
 
 GType itl_prayer_get_type (void) G_GNUC_CONST;
-GObject *itl_prayer_new              (void);
+ItlPrayer *itl_prayer_new              (void);
 
 void itl_prayer_setMethod(ItlPrayer *prayer, gint n);
 GList *itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate);
@@ -78,9 +78,6 @@ GDateTime *itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cdate);
 gdouble itl_prayer_getNorthQibla(ItlPrayer *prayer);
 void itl_prayer_setLocation (ItlPrayer *prayer, gdouble degreeLong, gdouble
                              degreeLat, gdouble gmtDiff, gboolean dst);
-void itl_prayer_set_seaLevel(ItlPrayer *prayer, gdouble seaLevel);
-void itl_prayer_set_pressure(ItlPrayer *prayer, gdouble pressure);
-void itl_prayer_set_temperature(ItlPrayer *prayer, gdouble temperature);
 
 G_END_DECLS
 
