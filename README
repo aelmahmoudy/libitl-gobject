@@ -1,1 +1,2 @@
 Build-Deps: libitl-dev libgirepository1.0-dev gobject-introspection
+For autogen.sh: libtool automake autoconf
