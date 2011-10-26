@@ -175,8 +175,13 @@ enum
   PROP_MATHHAB,
   PROP_NEAREST_LAT,
   PROP_EXTREME,
-  PROP_OFFSET
-//  offList[6],
+  PROP_OFFSET,
+  PROP_FAJR_OFFSET,
+  PROP_SHUROOQ_OFFSET,
+  PROP_DHUHR_OFFSET,
+  PROP_ASR_OFFSET,
+  PROP_MAGHRIB_OFFSET,
+  PROP_ISHA_OFFSET
 };
 
 /* Defaults (copied from libitl's C library */
@@ -260,6 +265,24 @@ itl_prayer_set_property (GObject      *object,
     case PROP_OFFSET:
       prayer->priv->method.offset = (int) g_value_get_boolean (value);
       break;
+    case PROP_FAJR_OFFSET:
+      prayer->priv->method.offList[0] = (double) g_value_get_double (value);
+      break;
+    case PROP_SHUROOQ_OFFSET:
+      prayer->priv->method.offList[1] = (double) g_value_get_double (value);
+      break;
+    case PROP_DHUHR_OFFSET:
+      prayer->priv->method.offList[2] = (double) g_value_get_double (value);
+      break;
+    case PROP_ASR_OFFSET:
+      prayer->priv->method.offList[3] = (double) g_value_get_double (value);
+      break;
+    case PROP_MAGHRIB_OFFSET:
+      prayer->priv->method.offList[4] = (double) g_value_get_double (value);
+      break;
+    case PROP_ISHA_OFFSET:
+      prayer->priv->method.offList[5] = (double) g_value_get_double (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -331,6 +354,24 @@ itl_prayer_get_property (GObject      *object,
       break;
     case PROP_OFFSET:
       g_value_set_boolean (value, (gboolean) prayer->priv->method.offset);
+      break;
+    case PROP_FAJR_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[0]);
+      break;
+    case PROP_SHUROOQ_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[1]);
+      break;
+    case PROP_DHUHR_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[2]);
+      break;
+    case PROP_ASR_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[3]);
+      break;
+    case PROP_MAGHRIB_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[4]);
+      break;
+    case PROP_ISHA_OFFSET:
+      g_value_set_double (value, (gdouble) prayer->priv->method.offList[5]);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -525,12 +566,54 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                      "This option allows you to add or subtract any amount of minutes to the daily computed prayer times based on values (in minutes) for each prayer in the offList array",
                                                      FALSE, G_PARAM_READABLE |
                                                      G_PARAM_WRITABLE));
-/*  double offList[6];  /* For Example: If you want to add 30 seconds to
-                         Maghrib and subtract 2 minutes from Ishaa:
-                              offset = 1
-                              offList[4] = 0.5
-                              offList[5] = -2
-                         ..and than call getPrayerTimes as usual. */
+  g_object_class_install_property (gobject_class, PROP_FAJR_OFFSET,
+                                   g_param_spec_double ("fajrOffset",
+                                                        "Fajr offset",
+                                                        "Fajr offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_SHUROOQ_OFFSET,
+                                   g_param_spec_double ("shurooqOffset",
+                                                        "Shurooq offset",
+                                                        "Shurooq offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_DHUHR_OFFSET,
+                                   g_param_spec_double ("dhuhrOffset",
+                                                        "Dhuhr offset",
+                                                        "Dhuhr offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_ASR_OFFSET,
+                                   g_param_spec_double ("asrOffset",
+                                                        "Asr offset",
+                                                        "Asr offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_MAGHRIB_OFFSET,
+                                   g_param_spec_double ("maghribOffset",
+                                                        "Maghrib offset",
+                                                        "Maghrib offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_ISHA_OFFSET,
+                                   g_param_spec_double ("ishaOffset",
+                                                        "Ishaa' offset",
+                                                        "Ishaa' offset",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE, 0.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
 
   g_type_class_add_private (gobject_class, sizeof (ItlPrayerPrivate));
 }
