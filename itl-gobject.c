@@ -15,7 +15,7 @@
 */
 
 #include "itl-gobject.h"
-
+#include "itl-gobject-enums.h"
 /**
  * itl_h_date:
  *
@@ -251,16 +251,16 @@ itl_prayer_set_property (GObject      *object,
       prayer->priv->method.imsaakInv = (int) g_value_get_int (value);
       break;
     case PROP_ROUND:
-      prayer->priv->method.round = (int) g_value_get_int (value);
+      prayer->priv->method.round = (int) g_value_get_enum (value);
       break;
     case PROP_MATHHAB:
-      prayer->priv->method.mathhab = (int) g_value_get_int (value);
+      prayer->priv->method.mathhab = (int) g_value_get_enum (value);
       break;
     case PROP_NEAREST_LAT:
       prayer->priv->method.nearestLat = (double) g_value_get_double (value);
       break;
     case PROP_EXTREME:
-      prayer->priv->method.extreme = (int) g_value_get_int (value);
+      prayer->priv->method.extreme = (int) g_value_get_enum (value);
       break;
     case PROP_OFFSET:
       prayer->priv->method.offset = (int) g_value_get_boolean (value);
@@ -341,16 +341,16 @@ itl_prayer_get_property (GObject      *object,
       g_value_set_int (value, (gint) prayer->priv->method.imsaakInv);
       break;
     case PROP_ROUND:
-      g_value_set_int (value, (gint) prayer->priv->method.round);
+      g_value_set_enum (value, (gint) prayer->priv->method.round);
       break;
     case PROP_MATHHAB:
-      g_value_set_int (value, (gint) prayer->priv->method.mathhab);
+      g_value_set_enum (value, (gint) prayer->priv->method.mathhab);
       break;
     case PROP_NEAREST_LAT:
       g_value_set_double (value, (gdouble) prayer->priv->method.nearestLat);
       break;
     case PROP_EXTREME:
-      g_value_set_int (value, (gint) prayer->priv->method.extreme);
+      g_value_set_enum (value, (gint) prayer->priv->method.extreme);
       break;
     case PROP_OFFSET:
       g_value_set_boolean (value, (gboolean) prayer->priv->method.offset);
@@ -505,28 +505,17 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_ROUND,
-                                   g_param_spec_int("round", "Rounding",
-                                                    "Method used for rounding seconds",
-                                                    0, 3, 0, G_PARAM_READABLE |
-                                                    G_PARAM_WRITABLE));
-/*                         0: No Rounding. "Prayer.seconds" is set to the
-                            amount of computed seconds.
-                         1: Normal Rounding. If seconds are equal to
-                            30 or above, add 1 minute. Sets
-                            "Prayer.seconds" to zero.
-                         2: Special Rounding. Similar to normal rounding
-                            but we always round down for Shurooq and
-                            Imsaak times. (default)
-                         3: Aggressive Rounding. Similar to Special
-                            Rounding but we add 1 minute if the seconds
-                            value is equal to 1 second or more.  */
+                                   g_param_spec_enum ("round", "Rounding",
+                                                      "Method used for rounding seconds",
+                                                      ITL_TYPE_ROUND_METHOD,
+                                                      NOROUND, G_PARAM_READABLE
+                                                      | G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_MATHHAB,
-                                   g_param_spec_int ("mathhab", "Math'hab",
-                                                     "Asr prayer shadow ratio",
-                                                     1, 2, 1, G_PARAM_READABLE
-                                                     | G_PARAM_WRITABLE));
-/*                         1: Shaf'i (default)
-                         2: Hanafi */
+                                   g_param_spec_enum ("mathhab", "Math'hab",
+                                                      "Asr prayer shadow ratio",
+                                                      ITL_TYPE_MATHHAB, SHAFII,
+                                                      G_PARAM_READABLE |
+                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_NEAREST_LAT,
                                    g_param_spec_double ("nearestLat",
                                                         "Nearest latitude",
@@ -536,30 +525,12 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_EXTREME,
-                                   g_param_spec_int ("extreme", "Extreme",
-                                                     "Extreme latitude calculation method",
-                                                     0, 13, 5, G_PARAM_READABLE
-                                                     | G_PARAM_WRITABLE));
-    /* 
-       Supported methods for Extreme Latitude calculations (Method.extreme) -
-       (see the file "./doc/method-info.txt" for details) :
-      
-       0:  none. if unable to calculate, leave as 99:99
-       1:  Nearest Latitude: All prayers Always
-       2:  Nearest Latitude: Fajr Ishaa Always
-       3:  Nearest Latitude: Fajr Ishaa if invalid
-       4:  Nearest Good Day: All prayers Always
-       5:  Nearest Good Day: Fajr Ishaa if invalid (default)
-       6:  1/7th of Night: Fajr Ishaa Always
-       7:  1/7th of Night: Fajr Ishaa if invalid
-       8:  1/7th of Day: Fajr Ishaa Always
-       9:  1/7th of Day: Fajr Ishaa if invalid
-       10: Half of the Night: Fajr Ishaa Always
-       11: Half of the Night: Fajr Ishaa if invalid
-       12: Minutes from Shorooq/Maghrib: Fajr Ishaa Always (e.g. Maghrib=Ishaa)
-       13: Minutes from Shorooq/Maghrib: Fajr Ishaa If invalid
-    
-    */
+                                   g_param_spec_enum ("extreme", "Extreme",
+                                                      "Extreme latitude calculation method",
+                                                      ITL_TYPE_EXTREME_METHOD,
+                                                      NEAREST_GOOD_DAY_INVALID,
+                                                      G_PARAM_READABLE |
+                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_OFFSET,
                                    g_param_spec_boolean ("offset",
                                                      "Enable Offsets",
@@ -648,22 +619,13 @@ itl_prayer_new (void)
  * itl_prayer_setMethod:
  *
  * @prayer: (in): an #ItlPrayer
- * @n: (in): auto fill method: \
- *    0: none. Set to default or 0 \
- *    1: Egyptian General Authority of Survey \
- *    2: University of Islamic Sciences, Karachi (Shaf'i) \
- *    3: University of Islamic Sciences, Karachi (Hanafi) \
- *    4: Islamic Society of North America \
- *    5: Muslim World League (MWL) \
- *    6: Umm Al-Qurra, Saudi Arabia \
- *    7: Fixed Ishaa Interval (always 90) \
- *    8: Egyptian General Authority of Survey (Egypt)
+ * @n: (in): auto fill method
  *
  * This function is used to auto fill the Method structure with predefined
  * data.
  */
 void
-itl_prayer_setMethod (ItlPrayer *prayer, gint n)
+itl_prayer_setMethod (ItlPrayer *prayer, ItlMethod n)
 {
   g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
 

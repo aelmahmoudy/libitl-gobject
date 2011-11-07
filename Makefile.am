@@ -2,10 +2,12 @@
 DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
 
 lib_LTLIBRARIES = libitl_gobject.la
-libitl_gobject_la_CFLAGS = $(GOBJECT_CFLAGS) -I/usr/include/itl
+libitl_gobject_la_CFLAGS = $(GOBJECT_CFLAGS) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
 libitl_gobject_la_LIBADD= $(GOBJECT_LIBS) -litl
-libitl_gobject_la_SOURCES =	itl-gobject.c
-libitl_gobject_la_HEADER =	itl-gobject.h
+libitl_gobject_la_SOURCES =	itl-gobject.c itl-gobject-enums.c
+libitl_gobject_la_HEADER =	itl-gobject.h itl-gobject-enums.h
+
+BUILT_SOURCES=itl-gobject-enums.c itl-gobject-enums.h
 
 CLEANFILES=
 
@@ -19,7 +21,7 @@ introspection_sources = $(libitl_gobject_la_SOURCES) $(libitl_gobject_la_HEADER)
 
 Itl-1.0.gir: libitl_gobject.la
 Itl_1_0_gir_INCLUDES = GObject-2.0 GLib-2.0
-Itl_1_0_gir_CFLAGS = $(INCLUDES) -I/usr/include/itl
+Itl_1_0_gir_CFLAGS = $(INCLUDES) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
 Itl_1_0_gir_LIBS = libitl_gobject.la
 Itl_1_0_gir_FILES = $(introspection_sources)
 INTROSPECTION_GIRS += Itl-1.0.gir
@@ -30,7 +32,12 @@ gir_DATA = $(INTROSPECTION_GIRS)
 typelibdir = $(libdir)/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
-CLEANFILES += $(gir_DATA) $(typelib_DATA)
+CLEANFILES += $(gir_DATA) $(typelib_DATA) itl-gobject-enums.c itl-gobject-enums.h
 endif
 
+itl-gobject-enums.c: itl-gobject.h itl-gobject-enums.c.in
+	glib-mkenums --template itl-gobject-enums.c.in itl-gobject.h > itl-gobject-enums.c
+	glib-mkenums --template itl-gobject-enums.h.in itl-gobject.h > itl-gobject-enums.h
 
+itl-gobject-enums.h: itl-gobject.h itl-gobject-enums.h.in
+	glib-mkenums --template itl-gobject-enums.h.in itl-gobject.h > $@
