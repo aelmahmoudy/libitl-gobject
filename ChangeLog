@@ -1,0 +1,87 @@
+commit d8139af7c16432657f4fbfb01a8751e89a50dfd3
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 11:38:12 2011 +0200
+
+    Copied enums for extreme method & method from ITL library C code
+
+commit cba1bbe6532d92b5b626c28acd63707b34c87811
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Mon Nov 7 22:40:54 2011 +0200
+
+    Use enum for Mathhab, round method, auto-fill method, extreme method
+
+commit 05364243641d44e3d0ca2e4e6304b0ff6fd79264
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Wed Oct 26 06:04:36 2011 +0200
+
+    Added properties for prayer offsets
+
+commit 221c528e6ae47c78c7dd6eea7fc069d498ec4a71
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Oct 25 21:30:20 2011 +0200
+
+    Removed invalid FIXME comment
+
+commit 325113cc7c03eb89607eee27355a088318bc0b05
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Oct 25 21:27:43 2011 +0200
+
+    Added autogen.sh script
+
+commit 3020c8efb29633d3bb7a539cdda44a919c518454
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Oct 25 21:08:15 2011 +0200
+
+    * Fixed construtor: return ItlPrayer instead of GObject
+    * Added finalize & dispose methods
+    * Use properties and dropped the set_{temperature, pressure, seaLevel}
+      methods
+    
+    TODO: How to add offList[6] property?
+
+commit af280019758569e84d7a531a5215b0447154d0fc
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Oct 25 15:56:59 2011 +0200
+
+    Added copyright file & headers
+
+commit fa888f7e5027810b212c3b9160e09dcd19e79a11
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Sun Oct 23 20:24:32 2011 +0200
+
+    * Remove prayer from private struct
+    * Enhance/fix annotations
+    * getPrayerTimes returns a GList of GDateTime's
+
+commit 19b6a03e66fb1647eba2363ea1b121f97398f55b
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Sun Oct 23 19:31:23 2011 +0200
+
+    * Fixes:
+      + get_(day|month|year) -> g_date_get_\1
+      + Commented out g_type definition
+    * Added annotation for Prayer constructor
+
+commit dcf6caa108b4aa8ba890f89a9178663d09a55121
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Sun Oct 23 13:26:16 2011 +0200
+
+    * Annotate all functions
+    * Modified GregHijri function
+    * Modified prayer methods:
+      + Set default values for temperature, pressure & sea level
+      + Add separate set_* methods for each of temperature, pressure & sea
+        level
+      + Use GDateTime struct to return prayer time
+
+commit adce9d0ddb257a507843d8c58e6fe967af1c4e8d
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Sat Oct 22 23:18:56 2011 +0200
+
+    Modify Hijri <-> Gregorian functions and add annotations
+
+commit b79cab5eecc0e84bc860f8dd25973c44ea094ab0
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Sat Oct 8 22:26:47 2011 +0200
+
+    Initial commit
