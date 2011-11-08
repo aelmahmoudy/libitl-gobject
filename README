@@ -1,4 +1,11 @@
 GObject introspection data for the ITL library
 
 Build-Deps: libitl-dev libgirepository1.0-dev gobject-introspection
-For autogen.sh: libtool automake autoconf
+For autoreconf: libtool automake autoconf
+
+To build
+========
+autoreconf -f -i
+./configure
+make
+make install
