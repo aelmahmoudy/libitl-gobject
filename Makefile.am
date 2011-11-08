@@ -24,7 +24,6 @@ Itl_1_0_gir_INCLUDES = GObject-2.0 GLib-2.0
 Itl_1_0_gir_CFLAGS = $(INCLUDES) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
 Itl_1_0_gir_LIBS = libitl_gobject.la
 Itl_1_0_gir_FILES = $(introspection_sources)
-INTROSPECTION_GIRS += Itl-1.0.gir
 
 girdir = $(datadir)/gir-1.0
 gir_DATA = $(INTROSPECTION_GIRS)
@@ -36,8 +35,7 @@ CLEANFILES += $(gir_DATA) $(typelib_DATA) itl-gobject-enums.c itl-gobject-enums.
 endif
 
 itl-gobject-enums.c: itl-gobject.h itl-gobject-enums.c.in
-	glib-mkenums --template itl-gobject-enums.c.in itl-gobject.h > itl-gobject-enums.c
-	glib-mkenums --template itl-gobject-enums.h.in itl-gobject.h > itl-gobject-enums.h
+	glib-mkenums --template $@.in itl-gobject.h > $@
 
 itl-gobject-enums.h: itl-gobject.h itl-gobject-enums.h.in
-	glib-mkenums --template itl-gobject-enums.h.in itl-gobject.h > $@
+	glib-mkenums --template $@.in itl-gobject.h > $@
