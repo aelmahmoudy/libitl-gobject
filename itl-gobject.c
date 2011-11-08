@@ -528,7 +528,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                    g_param_spec_enum ("extreme", "Extreme",
                                                       "Extreme latitude calculation method",
                                                       ITL_TYPE_EXTREME_METHOD,
-                                                      NEAREST_GOOD_DAY_INVALID,
+                                                      GOOD_INVALID,
                                                       G_PARAM_READABLE |
                                                       G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_OFFSET,
