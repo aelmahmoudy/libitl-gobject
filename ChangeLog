@@ -1,3 +1,53 @@
+commit 64cc29cbacdb24d6768b53dbf2e07c2477599bcd
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Wed Nov 9 22:11:18 2011 +0200
+
+    Better description
+
+commit f20545e386d3270e259b46c303cedc72c950bd79
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Wed Nov 9 21:29:25 2011 +0200
+
+    Use the glib/gobject naming style for properties (ie: 'foo-bar')
+
+commit 7ccf699c29cfdce4ea18114998f45439c993d2c1
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Wed Nov 9 15:52:12 2011 +0200
+
+    Silly me, latitutde & longitude were reversed !
+
+commit 80ec1aed8f4e2e6859ad4cf12b6dbedc8055e938
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 13:07:59 2011 +0200
+
+    Added build instructions
+
+commit 2df8d33350109d91aa7f64d6652806e3ca22e2e2
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 13:07:21 2011 +0200
+
+    Removed extra INTROSPECTION_GIRS += setting
+    
+    This extra setting caused make install to fail
+
+commit 1b151d8fcad42ed13db857e303618baaeb64b633
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 12:21:04 2011 +0200
+
+    No need for autogen.sh script, autoreconf does the job
+
+commit 5a0564dfbb99212a10de2580752563ff1f5f345a
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 11:44:15 2011 +0200
+
+    Added a testing script
+
+commit c2c07ed89274e774a6c31e3440154f58f0835aea
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Tue Nov 8 11:44:04 2011 +0200
+
+    Added files needed by autoconf
+
 commit d8139af7c16432657f4fbfb01a8751e89a50dfd3
 Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 Date:   Tue Nov 8 11:38:12 2011 +0200
