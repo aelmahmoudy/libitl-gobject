@@ -1,4 +1,4 @@
-GObject introspection data for the ITL library
+GObject bindings & introspection data for the ITL library
 
 Build-Deps: libitl-dev libgirepository1.0-dev gobject-introspection
 For autoreconf: libtool automake autoconf
