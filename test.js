@@ -22,7 +22,13 @@ let text = HijriNow.get_day() + " " + HijriNow.get_month() + " " + HijriNow.get_
 // Get prayer times:
 let PrayerObj = new Itl.Prayer();
 PrayerObj.setMethod(Itl.Method.EGYPT_NEW); // Egyptian survey method
-PrayerObj.setLocation(31.4, 30.13, 2.0, 0); // Location for Cairo
+
+//PrayerObj.setLocation(31.4, 30.13, 2.0, 0); // Location for Cairo
+PrayerObj.degree_long = 31.4;
+PrayerObj.degree_lat = 30.13;
+PrayerObj.gmt_diff = 2.0;
+PrayerObj.dst = false;
+
 let today = new GLib.Date.new_dmy(now.getDate(), now.getMonth()+1, now.getFullYear());
 let PrayerList = PrayerObj.getPrayerTimes(today);
 
@@ -31,7 +37,7 @@ for(let i=0; i<6; i++) {
   text += ("\n" + PrayerName(i) + ": " + PrayerList[i].get_hour() + ":" + PrayerList[i].get_minute());
 }
 text += "\n";
-text += "\ndegreeLong=" + PrayerObj.degreeLong;
+text += "\ndegreeLong=" + PrayerObj.degree_long;
 
 Notify.init('Salat');
 n = Notify.Notification.new('Prayer times', text, null);

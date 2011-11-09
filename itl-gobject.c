@@ -404,21 +404,21 @@ itl_prayer_class_init (ItlPrayerClass *klass)
   /* Location properties */
   g_object_class_install_property (gobject_class,
                                    PROP_DEGREE_LONG,
-                                   g_param_spec_double ("degreeLong",
+                                   g_param_spec_double ("degree-long",
                                                         "Longitude", "Longitude in decimal degree",
                                                         -180.0, 180.0, KAABA_LONG,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class,
                                    PROP_DEGREE_LAT,
-                                   g_param_spec_double ("degreeLat",
+                                   g_param_spec_double ("degree-lat",
                                                         "Latitude", " Latitude in decimal degree",
                                                         -90.0, 90.0, KAABA_LAT,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class,
                                    PROP_GMT_DIFF,
-                                   g_param_spec_double ("gmtDiff",
+                                   g_param_spec_double ("gmt-diff",
                                                         "GMT difference",
                                                         " GMT difference at regular time.",
                                                         -12.0, +14.0, 3.0,
@@ -434,7 +434,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                          G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class,
                                    PROP_SEA_LEVEL,
-                                   g_param_spec_double ("seaLevel",
+                                   g_param_spec_double ("sea-level",
                                                         "Sea level",
                                                         "Height above Sea level in meters",
                                                         -G_MAXDOUBLE,
@@ -461,7 +461,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
 
   /* Method properties */
   g_object_class_install_property (gobject_class, PROP_FAJR_ANG,
-                                   g_param_spec_double ("fajrAng",
+                                   g_param_spec_double ("fajr-ang",
                                                         "Fajr angle",
                                                         "Fajr angle",
                                                         0.0,
@@ -469,7 +469,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_ISHAA_ANG,
-                                   g_param_spec_double ("ishaaAng",
+                                   g_param_spec_double ("ishaa-ang",
                                                         "Ishaa' angle",
                                                         "Ishaa' angle",
                                                         0.0,
@@ -477,28 +477,28 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_FAJR_INV,
-                                   g_param_spec_int ("fajrInv",
+                                   g_param_spec_int ("fajr-inv",
                                                      "Fajr interval",
                                                      "Amount of minutes between Fajr and Shurooq (0 if not used)",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READABLE |
                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_ISHAA_INV,
-                                   g_param_spec_int ("ishaaInv",
+                                   g_param_spec_int ("ishaa-inv",
                                                      "Ishaa' interval",
                                                      "Amount of minutes between Ishaa and Maghrib (0 if not used)",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READABLE |
                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_IMSAAK_INV,
-                                   g_param_spec_int ("imsaakInv",
+                                   g_param_spec_int ("imsaak-inv",
                                                      "Imsaak Interval",
                                                      "Amount of minutes between Imsaak and Fajr",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READABLE |
                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_IMSAAK_ANG,
-                                   g_param_spec_double ("imsaakAng",
+                                   g_param_spec_double ("imsaak-ang",
                                                         "Imsaak angle",
                                                         " The angle difference between Imsaak and Fajr",
                                                         0, G_MAXINT, 0,
@@ -517,7 +517,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                       G_PARAM_READABLE |
                                                       G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_NEAREST_LAT,
-                                   g_param_spec_double ("nearestLat",
+                                   g_param_spec_double ("nearest-lat",
                                                         "Nearest latitude",
                                                         "Latitude Used for the 'Nearest Latitude' extreme methods.",
                                                         -90.0, 90.0,
@@ -538,7 +538,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                      FALSE, G_PARAM_READABLE |
                                                      G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_FAJR_OFFSET,
-                                   g_param_spec_double ("fajrOffset",
+                                   g_param_spec_double ("fajr-offset",
                                                         "Fajr offset",
                                                         "Fajr offset",
                                                         -G_MAXDOUBLE,
@@ -546,7 +546,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_SHUROOQ_OFFSET,
-                                   g_param_spec_double ("shurooqOffset",
+                                   g_param_spec_double ("shurooq-offset",
                                                         "Shurooq offset",
                                                         "Shurooq offset",
                                                         -G_MAXDOUBLE,
@@ -554,7 +554,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_DHUHR_OFFSET,
-                                   g_param_spec_double ("dhuhrOffset",
+                                   g_param_spec_double ("dhuhr-offset",
                                                         "Dhuhr offset",
                                                         "Dhuhr offset",
                                                         -G_MAXDOUBLE,
@@ -562,7 +562,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_ASR_OFFSET,
-                                   g_param_spec_double ("asrOffset",
+                                   g_param_spec_double ("asr-offset",
                                                         "Asr offset",
                                                         "Asr offset",
                                                         -G_MAXDOUBLE,
@@ -570,7 +570,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_MAGHRIB_OFFSET,
-                                   g_param_spec_double ("maghribOffset",
+                                   g_param_spec_double ("maghrib-offset",
                                                         "Maghrib offset",
                                                         "Maghrib offset",
                                                         -G_MAXDOUBLE,
@@ -578,7 +578,7 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_ISHA_OFFSET,
-                                   g_param_spec_double ("ishaOffset",
+                                   g_param_spec_double ("isha-offset",
                                                         "Ishaa' offset",
                                                         "Ishaa' offset",
                                                         -G_MAXDOUBLE,
