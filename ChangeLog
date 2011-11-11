@@ -1,3 +1,34 @@
+commit 0e081c350fb7d87a9daa01eb2a22a215b9c68901
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Fri Nov 11 18:27:15 2011 +0200
+
+    Added pkg-config file
+
+commit 6a9a22d24067b30828358399b5ca3161efcab864
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Fri Nov 11 18:01:16 2011 +0200
+
+    Install header files
+
+commit 6f77bc5f8ffc6d530e95a8bac323e2c27538027b
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Fri Nov 11 17:01:15 2011 +0200
+
+    itl-gobject-enums.[ch] should be removed even if introspection isn't
+    used
+
+commit cf75b9bcde942cac98ba9f05ed14ede3c6c439a6
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Fri Nov 11 10:52:39 2011 +0200
+
+    Use LTVERSION
+
+commit c9859320d0da14e0b4d5eecea24d6731aaa6a919
+Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+Date:   Wed Nov 9 22:13:16 2011 +0200
+
+    Release 0.1
+
 commit 64cc29cbacdb24d6768b53dbf2e07c2477599bcd
 Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 Date:   Wed Nov 9 22:11:18 2011 +0200
