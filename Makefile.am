@@ -6,7 +6,8 @@ libitl_gobject_la_CFLAGS = $(GOBJECT_CFLAGS) -I/usr/include/itl -DITL_GOBJECT_CO
 libitl_gobject_la_LDFLAGS = -version-info $(LTVERSION)
 libitl_gobject_la_LIBADD= $(GOBJECT_LIBS) -litl
 libitl_gobject_la_SOURCES =	itl-gobject.c itl-gobject-enums.c
-libitl_gobject_la_HEADER =	itl-gobject.h itl-gobject-enums.h
+libitl_gobject_la_HEADERS =	itl-gobject.h itl-gobject-enums.h
+libitl_gobject_ladir = $(includedir)/itl
 
 BUILT_SOURCES=itl-gobject-enums.c itl-gobject-enums.h
 
@@ -18,7 +19,7 @@ INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
 INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 
 if HAVE_INTROSPECTION
-introspection_sources = $(libitl_gobject_la_SOURCES) $(libitl_gobject_la_HEADER)
+introspection_sources = $(libitl_gobject_la_SOURCES) $(libitl_gobject_la_HEADERS)
 
 Itl-1.0.gir: libitl_gobject.la
 Itl_1_0_gir_INCLUDES = GObject-2.0 GLib-2.0
