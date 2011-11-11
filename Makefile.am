@@ -3,6 +3,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
 
 lib_LTLIBRARIES = libitl_gobject.la
 libitl_gobject_la_CFLAGS = $(GOBJECT_CFLAGS) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
+libitl_gobject_la_LDFLAGS = -version-info $(LTVERSION)
 libitl_gobject_la_LIBADD= $(GOBJECT_LIBS) -litl
 libitl_gobject_la_SOURCES =	itl-gobject.c itl-gobject-enums.c
 libitl_gobject_la_HEADER =	itl-gobject.h itl-gobject-enums.h

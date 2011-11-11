@@ -1,11 +1,16 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
+define([CURRENT], [0])
+define([REV], [1])
+define([AGE], [0])
 
 AC_PREREQ([2.68])
-AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
-AM_INIT_AUTOMAKE(libitl-gobject.la, 1.0)
+AC_INIT([libitl-gobject], 0.2, [BUG-REPORT-ADDRESS])
+AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([itl-gobject.c])
 #AC_CONFIG_HEADERS([config.h])
+LTVERSION=CURRENT:REV:AGE
+AC_SUBST(LTVERSION)
 
 AC_PROG_LIBTOOL
 # Checks for programs.
