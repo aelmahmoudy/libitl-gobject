@@ -11,6 +11,9 @@ libitl_gobject_ladir = $(includedir)/itl
 
 BUILT_SOURCES=itl-gobject-enums.c itl-gobject-enums.h
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = @PACKAGE@.pc
+
 CLEANFILES=itl-gobject-enums.c itl-gobject-enums.h
 
 -include $(INTROSPECTION_MAKEFILE)

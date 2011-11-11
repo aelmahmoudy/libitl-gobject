@@ -31,5 +31,5 @@ GOBJECT_INTROSPECTION_CHECK([0.6.7])
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile libitl-gobject.pc])
 AC_OUTPUT
