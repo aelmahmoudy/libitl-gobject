@@ -10,7 +10,7 @@ libitl_gobject_la_HEADER =	itl-gobject.h itl-gobject-enums.h
 
 BUILT_SOURCES=itl-gobject-enums.c itl-gobject-enums.h
 
-CLEANFILES=
+CLEANFILES=itl-gobject-enums.c itl-gobject-enums.h
 
 -include $(INTROSPECTION_MAKEFILE)
 INTROSPECTION_GIRS = Itl-1.0.gir
@@ -32,7 +32,7 @@ gir_DATA = $(INTROSPECTION_GIRS)
 typelibdir = $(libdir)/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
-CLEANFILES += $(gir_DATA) $(typelib_DATA) itl-gobject-enums.c itl-gobject-enums.h
+CLEANFILES += $(gir_DATA) $(typelib_DATA)
 endif
 
 itl-gobject-enums.c: itl-gobject.h itl-gobject-enums.c.in
