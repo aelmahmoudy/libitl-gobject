@@ -654,7 +654,7 @@ itl_prayer_getPrayerTimes (ItlPrayer *prayer, GDate *cdate)
   GList *Prayers=NULL;
   Prayer ITLPrayer[6];
 
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+  g_return_val_if_fail (GOBJECT_IS_PRAYER (prayer), 0);
 
   g_object_ref (prayer);
 
@@ -712,7 +712,7 @@ itl_prayer_getNextDayFajr (ItlPrayer *prayer, GDate *cdate)
   Prayer cPrayer;
   GDateTime *NextDayFajr;
 
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+  g_return_val_if_fail (GOBJECT_IS_PRAYER (prayer), 0);
 
   g_object_ref (prayer);
 
@@ -746,7 +746,7 @@ itl_prayer_getNorthQibla (ItlPrayer *prayer)
 {
   gdouble NorthQibla;
 
-  g_return_if_fail (GOBJECT_IS_PRAYER (prayer));
+  g_return_val_if_fail (GOBJECT_IS_PRAYER (prayer), 0);
 
   g_object_ref (prayer);
 
