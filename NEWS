@@ -1,3 +1,13 @@
+0.2.1
+=====
+  * Fix FTBFS when using clang instead of gcc.
+    (Patch by: Nicolas Sévelin-Radiguet)
+
+0.2
+===
+  * Add pkg-config file
+  * Build system fixes.
+
 0.1
 ===
   * Initial release
