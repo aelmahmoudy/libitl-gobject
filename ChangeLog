@@ -1,168 +1,126 @@
-commit 0e081c350fb7d87a9daa01eb2a22a215b9c68901
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Fri Nov 11 18:27:15 2011 +0200
+2014-10-16  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
 
-    Added pkg-config file
+	* ChangeLog: Release 0.2.1 Use git2cl to generate ChangeLog
 
-commit 6a9a22d24067b30828358399b5ca3161efcab864
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Fri Nov 11 18:01:16 2011 +0200
+2014-10-16  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
 
-    Install header files
+	* NEWS: Update NEWS
 
-commit 6f77bc5f8ffc6d530e95a8bac323e2c27538027b
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Fri Nov 11 17:01:15 2011 +0200
+2014-03-25  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    itl-gobject-enums.[ch] should be removed even if introspection isn't
-    used
+	* itl-gobject.c: Fix FTBFS with clang instead of gcc Author: Nicolas Sévelin-Radiguet <nicosr@free.fr>
 
-commit cf75b9bcde942cac98ba9f05ed14ede3c6c439a6
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Fri Nov 11 10:52:39 2011 +0200
+2011-11-11  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Use LTVERSION
+	* ChangeLog: Release 0.2
 
-commit c9859320d0da14e0b4d5eecea24d6731aaa6a919
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Wed Nov 9 22:13:16 2011 +0200
+2011-11-11  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Release 0.1
+	* Makefile.am, configure.ac, libitl-gobject.pc.in: Added pkg-config
+	file
 
-commit 64cc29cbacdb24d6768b53dbf2e07c2477599bcd
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Wed Nov 9 22:11:18 2011 +0200
+2011-11-11  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Better description
+	* Makefile.am: Install header files
 
-commit f20545e386d3270e259b46c303cedc72c950bd79
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Wed Nov 9 21:29:25 2011 +0200
+2011-11-11  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Use the glib/gobject naming style for properties (ie: 'foo-bar')
+	* Makefile.am: itl-gobject-enums.[ch] should be removed even if
+	introspection isn't used
 
-commit 7ccf699c29cfdce4ea18114998f45439c993d2c1
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Wed Nov 9 15:52:12 2011 +0200
+2011-11-11  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Silly me, latitutde & longitude were reversed !
+	* Makefile.am, configure.ac: Use LTVERSION
 
-commit 80ec1aed8f4e2e6859ad4cf12b6dbedc8055e938
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 13:07:59 2011 +0200
+2011-11-09  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added build instructions
+	* ChangeLog: Release 0.1
 
-commit 2df8d33350109d91aa7f64d6652806e3ca22e2e2
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 13:07:21 2011 +0200
+2011-11-09  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Removed extra INTROSPECTION_GIRS += setting
-    
-    This extra setting caused make install to fail
+	* README: Better description
 
-commit 1b151d8fcad42ed13db857e303618baaeb64b633
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 12:21:04 2011 +0200
+2011-11-09  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    No need for autogen.sh script, autoreconf does the job
+	* itl-gobject.c, test.js: Use the glib/gobject naming style for
+	properties (ie: 'foo-bar')
 
-commit 5a0564dfbb99212a10de2580752563ff1f5f345a
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 11:44:15 2011 +0200
+2011-11-09  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added a testing script
+	* test.js: Silly me, latitutde & longitude were reversed !
 
-commit c2c07ed89274e774a6c31e3440154f58f0835aea
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 11:44:04 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added files needed by autoconf
+	* README: Added build instructions
 
-commit d8139af7c16432657f4fbfb01a8751e89a50dfd3
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Nov 8 11:38:12 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Copied enums for extreme method & method from ITL library C code
+	* Makefile.am: Removed extra INTROSPECTION_GIRS += setting This extra setting caused make install to fail
 
-commit cba1bbe6532d92b5b626c28acd63707b34c87811
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Mon Nov 7 22:40:54 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Use enum for Mathhab, round method, auto-fill method, extreme method
+	* autogen.sh: No need for autogen.sh script, autoreconf does the job
 
-commit 05364243641d44e3d0ca2e4e6304b0ff6fd79264
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Wed Oct 26 06:04:36 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added properties for prayer offsets
+	* test.js: Added a testing script
 
-commit 221c528e6ae47c78c7dd6eea7fc069d498ec4a71
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Oct 25 21:30:20 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Removed invalid FIXME comment
+	* AUTHORS, ChangeLog, INSTALL, NEWS: Added files needed by autoconf
 
-commit 325113cc7c03eb89607eee27355a088318bc0b05
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Oct 25 21:27:43 2011 +0200
+2011-11-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added autogen.sh script
+	* itl-gobject.c, itl-gobject.h: Copied enums for extreme method &
+	method from ITL library C code
 
-commit 3020c8efb29633d3bb7a539cdda44a919c518454
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Oct 25 21:08:15 2011 +0200
+2011-11-07  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    * Fixed construtor: return ItlPrayer instead of GObject
-    * Added finalize & dispose methods
-    * Use properties and dropped the set_{temperature, pressure, seaLevel}
-      methods
-    
-    TODO: How to add offList[6] property?
+	* Makefile.am, README, itl-gobject-enums.c.in,
+	itl-gobject-enums.h.in, itl-gobject.c, itl-gobject.h: Use enum for
+	Mathhab, round method, auto-fill method, extreme method
 
-commit af280019758569e84d7a531a5215b0447154d0fc
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Tue Oct 25 15:56:59 2011 +0200
+2011-10-26  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Added copyright file & headers
+	* itl-gobject.c: Added properties for prayer offsets
 
-commit fa888f7e5027810b212c3b9160e09dcd19e79a11
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Sun Oct 23 20:24:32 2011 +0200
+2011-10-25  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    * Remove prayer from private struct
-    * Enhance/fix annotations
-    * getPrayerTimes returns a GList of GDateTime's
+	* configure.ac: Removed invalid FIXME comment
 
-commit 19b6a03e66fb1647eba2363ea1b121f97398f55b
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Sun Oct 23 19:31:23 2011 +0200
+2011-10-25  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    * Fixes:
-      + get_(day|month|year) -> g_date_get_\1
-      + Commented out g_type definition
-    * Added annotation for Prayer constructor
+	* README, autogen.sh: Added autogen.sh script
 
-commit dcf6caa108b4aa8ba890f89a9178663d09a55121
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Sun Oct 23 13:26:16 2011 +0200
+2011-10-25  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    * Annotate all functions
-    * Modified GregHijri function
-    * Modified prayer methods:
-      + Set default values for temperature, pressure & sea level
-      + Add separate set_* methods for each of temperature, pressure & sea
-        level
-      + Use GDateTime struct to return prayer time
+	* itl-gobject.c, itl-gobject.h: * Fixed construtor: return ItlPrayer instead of GObject * Added finalize & dispose methods * Use properties and dropped the set_{temperature, pressure,
+	  seaLevel} methods TODO: How to add offList[6] property?
 
-commit adce9d0ddb257a507843d8c58e6fe967af1c4e8d
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Sat Oct 22 23:18:56 2011 +0200
+2011-10-25  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Modify Hijri <-> Gregorian functions and add annotations
+	* COPYING, itl-gobject.c, itl-gobject.h: Added copyright file &
+	headers
 
-commit b79cab5eecc0e84bc860f8dd25973c44ea094ab0
-Author: أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
-Date:   Sat Oct 8 22:26:47 2011 +0200
+2011-10-23  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
 
-    Initial commit
+	* itl-gobject.c, itl-gobject.h: * Remove prayer from private struct * Enhance/fix annotations * getPrayerTimes returns a GList of GDateTime's
+
+2011-10-23  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+
+	* itl-gobject.c, itl-gobject.h: * Fixes:   + get_(day|month|year) -> g_date_get_\1   + Commented out g_type definition * Added annotation for Prayer constructor
+
+2011-10-23  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+
+	* itl-gobject.c, itl-gobject.h: * Annotate all functions * Modified GregHijri function * Modified prayer methods:   + Set default values for temperature, pressure & sea level   + Add separate set_* methods for each of temperature, pressure &
+	    sea level   + Use GDateTime struct to return prayer time
+
+2011-10-22  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+
+	* itl-gobject.c, itl-gobject.h: Modify Hijri <-> Gregorian functions
+	and add annotations
+
+2011-10-08  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@sabily.org>
+
+	* Initial commit
+
