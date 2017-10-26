@@ -165,6 +165,7 @@ enum
   PROP_PRESSURE,
   PROP_TEMPERATURE,
   /* Method properties */
+  PROP_METHOD,
   PROP_FAJR_ANG,
   PROP_ISHAA_ANG,
   PROP_IMSAAK_ANG,
@@ -175,6 +176,7 @@ enum
   PROP_MATHHAB,
   PROP_NEAREST_LAT,
   PROP_EXTREME,
+  PROP_EXTREME_LAT,
   PROP_OFFSET,
   PROP_FAJR_OFFSET,
   PROP_SHUROOQ_OFFSET,
@@ -232,6 +234,9 @@ itl_prayer_set_property (GObject      *object,
       prayer->priv->loc.temperature = (double) g_value_get_double (value);
       break;
     /* Method properties */
+    case PROP_METHOD:
+      prayer->priv->method.method = (int) g_value_get_enum (value);
+      break;
     case PROP_FAJR_ANG:
       prayer->priv->method.fajrAng = (double) g_value_get_double (value);
       break;
@@ -261,6 +266,9 @@ itl_prayer_set_property (GObject      *object,
       break;
     case PROP_EXTREME:
       prayer->priv->method.extreme = (int) g_value_get_enum (value);
+      break;
+    case PROP_EXTREME_LAT:
+      prayer->priv->method.extremeLat = (double) g_value_get_double (value);
       break;
     case PROP_OFFSET:
       prayer->priv->method.offset = (int) g_value_get_boolean (value);
@@ -322,6 +330,9 @@ itl_prayer_get_property (GObject      *object,
       g_value_set_double (value, (gdouble) prayer->priv->loc.temperature);
       break;
     /* Method properties */
+    case PROP_METHOD:
+      g_value_set_enum (value, (gint) prayer->priv->method.method);
+      break;
     case PROP_FAJR_ANG:
       g_value_set_double (value, (gdouble) prayer->priv->method.fajrAng);
       break;
@@ -351,6 +362,9 @@ itl_prayer_get_property (GObject      *object,
       break;
     case PROP_EXTREME:
       g_value_set_enum (value, (gint) prayer->priv->method.extreme);
+      break;
+    case PROP_EXTREME_LAT:
+      g_value_set_double (value, (gdouble) prayer->priv->method.extremeLat);
       break;
     case PROP_OFFSET:
       g_value_set_boolean (value, (gboolean) prayer->priv->method.offset);
@@ -460,6 +474,13 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                         G_PARAM_WRITABLE));
 
   /* Method properties */
+  g_object_class_install_property (gobject_class, PROP_METHOD,
+                                   g_param_spec_enum ("method",
+                                                        "Method",
+                                                        "Calculation method",
+                                                      ITL_TYPE_METHOD,
+                                                      NONE,
+                                                        G_PARAM_READABLE));
   g_object_class_install_property (gobject_class, PROP_FAJR_ANG,
                                    g_param_spec_double ("fajr-ang",
                                                         "Fajr angle",
@@ -531,6 +552,13 @@ itl_prayer_class_init (ItlPrayerClass *klass)
                                                       GOOD_INVALID,
                                                       G_PARAM_READABLE |
                                                       G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_EXTREME_LAT,
+                                   g_param_spec_double ("extreme-lat",
+                                                        "Extreme latitude",
+                                                        "Latitude at which the extreme method should always be used",
+                                                        -90.0, 90.0, 55.0,
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE));
   g_object_class_install_property (gobject_class, PROP_OFFSET,
                                    g_param_spec_boolean ("offset",
                                                      "Enable Offsets",

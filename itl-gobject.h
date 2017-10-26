@@ -55,7 +55,10 @@ typedef enum
   MUSLIM_LEAGUE,
   UMM_ALQURRA,
   FIXED_ISHAA,
-  EGYPT_NEW
+  EGYPT_NEW,
+  UMM_ALQURRA_RAMADAN,
+  MOONSIGHTING_COMMITTEE,
+  MOROCCO_AWQAF
 } ItlMethod;
 
 typedef enum
@@ -74,7 +77,8 @@ typedef enum
   HALF_INVALID,
   MIN_ALWAYS,
   MIN_INVALID,
-  GOOD_INVALID_SAME
+  GOOD_INVALID_SAME,
+	ANGLE_BASED
 } ItlExtremeMethod;
 
 #define ITL_TYPE_PRAYER itl_prayer_get_type()
