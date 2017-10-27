@@ -1,46 +1,48 @@
+## The order of subdirs is important, don't change without a reason.
+SUBDIRS = src
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
-
-lib_LTLIBRARIES = libitl_gobject.la
-libitl_gobject_la_CFLAGS = $(GOBJECT_CFLAGS) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
-libitl_gobject_la_LDFLAGS = -version-info $(LTVERSION)
-libitl_gobject_la_LIBADD= $(GOBJECT_LIBS) -litl
-libitl_gobject_la_SOURCES =	itl-gobject.c itl-gobject-enums.c
-libitl_gobject_la_HEADERS =	itl-gobject.h itl-gobject-enums.h
-libitl_gobject_ladir = $(includedir)/itl
-
-BUILT_SOURCES=itl-gobject-enums.c itl-gobject-enums.h
+EXTRA_DIST = autogen.sh
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = @PACKAGE@.pc
 
-CLEANFILES=itl-gobject-enums.c itl-gobject-enums.h
+MAINTAINERCLEANFILES = \
+	$(GITIGNORE_MAINTAINERCLEANFILES_TOPLEVEL) \
+	$(GITIGNORE_MAINTAINERCLEANFILES_M4_LIBTOOL) \
+	$(GITIGNORE_MAINTAINERCLEANFILES_MAKEFILE_IN) \
+	$(srcdir)/INSTALL \
+	$(srcdir)/ChangeLog \
+	$(NULL)
 
--include $(INTROSPECTION_MAKEFILE)
-INTROSPECTION_GIRS = Itl-1.0.gir
-INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
-INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
+# Indent all C source and header files, using indent(1):
 
-if HAVE_INTROSPECTION
-introspection_sources = $(libitl_gobject_la_SOURCES) $(libitl_gobject_la_HEADERS)
+indent: $(srcdir)/.indent.pro
+	cd "$(srcdir)" && \
+	find . -mindepth 2 -type f -name "*.[ch]" -print | \
+	  xargs ./missing --run indent
 
-Itl-1.0.gir: libitl_gobject.la
-Itl_1_0_gir_INCLUDES = GObject-2.0 GLib-2.0
-Itl_1_0_gir_CFLAGS = $(INCLUDES) -I/usr/include/itl -DITL_GOBJECT_COMPILATION
-Itl_1_0_gir_LIBS = libitl_gobject.la
-Itl_1_0_gir_FILES = $(introspection_sources)
+.PHONY: indent
 
-girdir = $(datadir)/gir-1.0
-gir_DATA = $(INTROSPECTION_GIRS)
 
-typelibdir = $(libdir)/girepository-1.0
-typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+MAINTAINERCLEANFILES += ChangeLog
 
-CLEANFILES += $(gir_DATA) $(typelib_DATA)
-endif
 
-itl-gobject-enums.c: itl-gobject.h itl-gobject-enums.c.in
-	glib-mkenums --template $@.in itl-gobject.h > $@
+#
+# ChangeLog generation
+#
+CHANGELOG_RANGE =
+ChangeLog:
+	$(AM_V_GEN) if test -d "$(top_srcdir)/.git"; then \
+	  (GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run \
+	   git log $(CHANGELOG_RANGE) --stat) | fmt --split-only > $@.tmp \
+	  && mv -f $@.tmp "$(srcdir)/ChangeLog" \
+	  || ($(RM) $@.tmp; \
+	      echo Failed to generate ChangeLog, your ChangeLog may be outdated >&2; \
+	      (test -f $@ || echo git-log is required to generate this file >> "$(srcdir)/$@")); \
+	else \
+	  test -f $@ || \
+	  (echo A git checkout and git-log is required to generate ChangeLog >&2 && \
+	  echo A git checkout and git-log is required to generate this file >> "$(srcdir)/$@"); \
+	fi
+.PHONY: $(srcdir)/ChangeLog
 
-itl-gobject-enums.h: itl-gobject.h itl-gobject-enums.h.in
-	glib-mkenums --template $@.in itl-gobject.h > $@

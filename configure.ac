@@ -6,8 +6,8 @@ define([AGE], [0])
 
 AC_PREREQ([2.68])
 AC_INIT([libitl-gobject], 0.2, [https://github.com/aelmahmoudy/libitl-gobject/issues])
-AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([itl-gobject.c])
+AM_INIT_AUTOMAKE([subdir-objects])
+AC_CONFIG_SRCDIR([src])
 #AC_CONFIG_HEADERS([config.h])
 LTVERSION=CURRENT:REV:AGE
 AC_SUBST(LTVERSION)
@@ -31,5 +31,5 @@ GOBJECT_INTROSPECTION_CHECK([0.6.7])
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile libitl-gobject.pc])
+AC_CONFIG_FILES([Makefile src/Makefile libitl-gobject.pc])
 AC_OUTPUT
