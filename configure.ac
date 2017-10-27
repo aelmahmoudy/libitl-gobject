@@ -1,8 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-define([CURRENT], [0])
-define([REV], [1])
-define([AGE], [0])
+define([CURRENT], [1])
+define([REV], [2])
+define([AGE], [1])
 
 AC_PREREQ([2.68])
 AC_INIT([libitl-gobject], 0.2, [https://github.com/aelmahmoudy/libitl-gobject/issues])
