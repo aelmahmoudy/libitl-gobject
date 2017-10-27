@@ -5,7 +5,7 @@ define([REV], [1])
 define([AGE], [0])
 
 AC_PREREQ([2.68])
-AC_INIT([libitl-gobject], 0.2, [BUG-REPORT-ADDRESS])
+AC_INIT([libitl-gobject], 0.2, [https://github.com/aelmahmoudy/libitl-gobject/issues])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([itl-gobject.c])
 #AC_CONFIG_HEADERS([config.h])
