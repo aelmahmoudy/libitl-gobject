@@ -1,3 +1,8 @@
+0.3
+===
+  * Update for ITL 0.8.0
+	* Enhance directory structure
+
 0.2.1
 =====
   * Fix FTBFS when using clang instead of gcc.
