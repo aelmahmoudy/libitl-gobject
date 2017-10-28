@@ -1,3 +1,40 @@
+2017-10-28  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* configure.ac: Release 0.3
+
+2017-10-28  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* Makefile.am: Removed code to create ChangeLog
+
+2017-10-27  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* NEWS: Update NEWS file
+
+2017-10-27  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* configure.ac: Update lib. version
+
+2017-10-27  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* Makefile.am, configure.ac, itl-gobject-enums.c.in,
+	itl-gobject-enums.h.in, itl-gobject.c, itl-gobject.h,
+	src/Makefile.am, src/itl-gobject-enums.c.in,
+	src/itl-gobject-enums.h.in, src/itl-gobject.c, src/itl-gobject.h: 
+	Move sources to src/
+
+2017-10-27  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* configure.ac: Set bug report address
+
+2017-10-26  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* itl-gobject.c, itl-gobject.h: Update to ITL 0.8.0
+
+2017-10-26  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
+
+	* AUTHORS, INSTALL, itl-gobject.c, itl-gobject.h: Update my email &
+	copyright years
+
 2014-10-16  أحمد المحمودي (Ahmed El-Mahmoudy) <aelmahmoudy@users.sourceforge.net>
 
 	* ChangeLog: Release 0.2.1 Use git2cl to generate ChangeLog
